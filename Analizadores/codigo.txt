@@ -1,0 +1,4 @@
+public class class1{
+int x1 = 0;
+boolean b1 = true;
+}
