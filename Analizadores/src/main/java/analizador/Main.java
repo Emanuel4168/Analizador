@@ -136,6 +136,7 @@ public class Main extends JFrame implements ActionListener {
 		ArrayList<String> a1 = analizador.resultado;
 		ArrayList<Token> tk = analizador.tokenRC;
 		Sintactico s;
+		Tabla t;
 
 		consola.setText("");
 		
@@ -145,7 +146,13 @@ public class Main extends JFrame implements ActionListener {
 
 		if (a1.get(0).equals("No hay errores lexicos")) {
 			s = new Sintactico(analizador.tokenRC);
-		}
+			t = new Tabla(analizador.tokenRC);
+			
+			Semantico semantic = new Semantico(t.getValoresTabla(),area.getText());
+			ArrayList<String> semanticErrors = semantic.checkSemantic();
+			for (int i = 0; i < semanticErrors.size(); i++) {
+				consola.append(semanticErrors.get(i)+ "\n");
+			}
 	}
 	
 
