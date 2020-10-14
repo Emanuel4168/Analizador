@@ -1,4 +1,6 @@
-public class class1{
-int x1 = 0;
-boolean b1 = true;
+public class class1
+{
+ if(a1 > b1){
+int a1=0;
+}
 }
