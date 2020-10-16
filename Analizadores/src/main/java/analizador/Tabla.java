@@ -92,7 +92,7 @@ public class Tabla {
 
 		}
 		// Imprime la tabla de simbolos con sus datos
-		Main.consola.append("\n" + "No." + blancos("no.       ") + "Modificador" + blancos("modificador") + "Tipo"
+		/*Main.consola.append("\n" + "No." + blancos("no.       ") + "Modificador" + blancos("modificador") + "Tipo"
 				+ blancos("tipo") + "Nombre" + blancos("nombre") + "Valor" + blancos("valor") + "Renglon"
 				+ blancos("renglon") + "Columna o No. de token" + blancos("columna o No. de token") + "\n");
 		for (int i = 0; i < valoresTab.size(); i++) {
@@ -101,7 +101,7 @@ public class Tabla {
 					+ "    "+valoresTab.get(i).nombre + blancos(valoresTab.get(i).nombre)+ "    " + valoresTab.get(i).valor
 					+ blancos(valoresTab.get(i).valor)+ "    " + valoresTab.get(i).renglon + blancos(valoresTab.get(i).renglon)+ "        "
 					+ valoresTab.get(i).columna + blancos(valoresTab.get(i).columna)+"\n");
-		}
+		}*/
 	}
         
 	public void ValoresHaciaTabla(String ran, String tip, String nom, String val, String reng, String col) {

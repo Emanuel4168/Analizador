@@ -26,6 +26,7 @@ public class Semantico {
 	
 	public ArrayList<String> checkSemantic(){
 		CheckAssignments();
+		checkUndeclared();
 		checkDuplicity();
 		return this.errors;
 	}
@@ -43,7 +44,7 @@ public class Semantico {
 		return true;
 	}
 	
-	public boolean checkDuplicity() {
+	public boolean checkUndeclared() {
 		String[] lines = code.split("\\r?\\n"); 
 		for(int i = 0; i < lines.length; i++) { 
 			if(lines[i].contains(" class ")) {
@@ -60,6 +61,21 @@ public class Semantico {
 		
 		return true;
 	}
+	
+	public boolean checkDuplicity() {
+			
+			for(int i = 0; i < tablaSimbolos.size(); i++ ) {
+				ValoresTabla currentIdentifier = tablaSimbolos.get(i);
+				int identifierLine = Integer.parseInt(currentIdentifier.renglon);
+				ValoresTabla original = this.searchDuplicityByName(currentIdentifier.nombre,identifierLine);
+				if(original != null) {
+					errors.add("Error semantico en linea "+identifierLine+", el identificador "+ currentIdentifier.nombre + " ya ha sido declarado en la linea "+original.renglon);
+				}
+			}
+			return true;
+		}
+	
+	
 	
 	public boolean isBooleanValue(String value) {
 		return value.equals("false") || value.equals("true");
@@ -97,6 +113,19 @@ public class Semantico {
 			}
 		}
 		return false;
+	}
+	
+	private ValoresTabla searchDuplicityByName(String name,int linea) {
+		for(ValoresTabla simbolo: this.tablaSimbolos) {
+			if(simbolo.nombre.equals(name) && Integer.parseInt(simbolo.renglon) < linea ) {
+				/*if(this.sameScope(simbolo)) {
+					return simbolo;
+				}
+				return null;*/
+				return simbolo;
+			}
+		}
+		return null;
 	}
 
 }
