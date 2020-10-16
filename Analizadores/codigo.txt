@@ -1,8 +1,9 @@
 public class c1
 {
-int x1 = 1;
+ int x1  = 1;
 boolean b1 = false;
-if(x1 > b1)
-{
-}
+
+ int x2  = 4;
+boolean b2  = false;
+
 }

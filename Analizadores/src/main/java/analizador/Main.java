@@ -28,7 +28,8 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 public class Main extends JFrame implements ActionListener {
 
 	public static JTextArea area, consola;
-	private JButton btnCompilar, btnAbrir, btnCerrar;
+	private JButton btnCompilar,btnVerTabla, btnAbrir, btnCerrar;
+	private ArrayList<ValoresTabla> tablaSimbolos;
 	
 	public Main() {
 		hazInterfaz();
@@ -47,7 +48,7 @@ public class Main extends JFrame implements ActionListener {
 		setLocationRelativeTo(null);
 		setShape(new RoundRectangle2D.Double(0, 0, 500, 700, 20, 20));
 
-		PanelGradiente panel = new PanelGradiente();
+		PanelGradiente panel = new PanelGradiente(	);
 		panel.setBounds(0,0,500,700);
 		
 		area = new JTextArea();
@@ -55,13 +56,16 @@ public class Main extends JFrame implements ActionListener {
 		consola.setEnabled(false);
 		consola.setDisabledTextColor(Color.BLACK);
 		btnCompilar= new JButton("Compilar");
-		btnCompilar.setBounds(88, 5, 150, 40);
+		btnCompilar.setBounds(30, 5, 150, 40);
 		btnCompilar.addActionListener(this);
+		btnVerTabla = new JButton("Tabla de simbolos");
+		btnVerTabla.setBounds(175, 5, 150, 40);
+		btnVerTabla.addActionListener(this);
 		btnAbrir= new JButton("Abrir archivo");
-		btnAbrir.setBounds(263, 5, 150, 40);
+		btnAbrir.setBounds(320, 5, 150, 40);
 		btnAbrir.addActionListener(this);
 		btnCerrar= new JButton("X");
-		btnCerrar.setBounds(440,5, 40,40);
+		btnCerrar.setBounds(460,5, 40,40);
 		btnCerrar.setBackground(Color.decode("#65417A"));
 		btnCerrar.addActionListener(this);
 		
@@ -74,6 +78,7 @@ public class Main extends JFrame implements ActionListener {
 		add(scrollPaneConsola);
 		add(btnAbrir);
 		add(btnCompilar);
+		add(btnVerTabla);
 		add(btnCerrar);
 		add(panel);
 		setVisible(true);
@@ -89,6 +94,19 @@ public class Main extends JFrame implements ActionListener {
 		if(e.getSource() == btnCompilar) {
 			generarArchivo();
 			compilar();
+			return;
+		}
+		
+		if(e.getSource() == btnVerTabla) {
+			if(this.consola.getText().trim().length() == 0) {
+				JOptionPane.showMessageDialog(this, "No se ha realizado la compilacion");
+				return;
+			}
+			TablaSimbolosVista viewTabla = new TablaSimbolosVista(this.tablaSimbolos);
+			viewTabla.setSize(700, 460); 
+			viewTabla.setLocationRelativeTo(null);
+			viewTabla.setVisible(true);
+			//viewTabla.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
 			return;
 		}
 		
@@ -135,8 +153,8 @@ public class Main extends JFrame implements ActionListener {
 		Analiza analizador = new Analiza("codigo.txt");
 		ArrayList<String> a1 = analizador.resultado;
 		ArrayList<Token> tk = analizador.tokenRC;
-		Sintactico s;
 		Tabla t;
+		Sintactico s;
 
 		consola.setText("");
 		
@@ -144,21 +162,23 @@ public class Main extends JFrame implements ActionListener {
 			consola.append(a1.get(i)+ "\n");
 		}
 
-		if (a1.get(0).equals("No hay errores lexicos")) {
+		//if (a1.get(0).equals("No hay errores lexicos")) {
 			s = new Sintactico(analizador.tokenRC);
 			t = new Tabla(analizador.tokenRC);
 			
-			Semantico semantic = new Semantico(t.getValoresTabla(),area.getText());
+			tablaSimbolos = t.getValoresTabla();
+			Semantico semantic = new Semantico(tablaSimbolos,area.getText());
 			ArrayList<String> semanticErrors = semantic.checkSemantic();
+			consola.append("\n");
 			for (int i = 0; i < semanticErrors.size(); i++) {
 				consola.append(semanticErrors.get(i)+ "\n");
 			}
+		//}
+		
+
 	}
 	
 
-
-	}
-	
 	class PanelGradiente extends JPanel {
 		private static final long serialVersionUID = 1L;
 		
