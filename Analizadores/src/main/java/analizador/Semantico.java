@@ -10,6 +10,7 @@ public class Semantico {
 	private ArrayList<ValoresTabla> tablaSimbolos;
 	private ArrayList<String> errors;
 	private String code;
+	public boolean status;
 	
 	private String[] operators = {"==","+","-",">","<",">=","<=","!="};
 	private List<String> operatorsForNumbers = Arrays.asList("+","-","==",">","<",">=","<=","!=");
@@ -35,6 +36,7 @@ public class Semantico {
 		checkDuplicity();
 		checkOperators();
 		if(this.errors.size() == 0) {
+			status = true;
 			errors.add("No hay errores semanticos");
 		}
 		return this.errors;
