@@ -47,7 +47,7 @@ public class Main extends JFrame implements ActionListener {
 		setLocationRelativeTo(null);
 		setShape(new RoundRectangle2D.Double(0, 0, 500, 700, 20, 20));
 
-		PanelGradiente panel = new PanelGradiente(	);
+		PanelGradiente panel = new PanelGradiente();
 		panel.setBounds(0,0,500,700);
 		
 		area = new JTextArea();
@@ -156,6 +156,9 @@ public class Main extends JFrame implements ActionListener {
 	}
 	
 
+
+	}
+	
 	class PanelGradiente extends JPanel {
 		private static final long serialVersionUID = 1L;
 		
