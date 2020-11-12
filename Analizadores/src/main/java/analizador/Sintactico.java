@@ -29,7 +29,7 @@ public class Sintactico<T> {
 //			this.type = this..get(0);
 //			this.tok = this.token.get(0);
 		} catch (Exception e) {
-			Main.consola.append("El archivo est� vac�o");
+			Main.consola.append("El archivo esta vacio");
 		}
 		Programa();
 	}
@@ -241,21 +241,21 @@ public class Sintactico<T> {
 	public void error(int type) {
 		String tipo = ValoresInversos(type);
 		if (type == 0)
-			tipo = "\nError sint�ctico, se esperaba una expresi�n *class* al comienzo";
+			tipo = "\nError sintactico, se esperaba una expresion *class* al comienzo";
 		else if (type == 1)
-			tipo = "\nError sint�ctico en los l�mites, se encontr� al menos un token despu�s de la �ltima llave cerrada, token ** "
+			tipo = "\nError sintactico en los limites, se encontro al menos un token despues de la ultima llave cerrada, token ** "
 					+ tok + " ** en linea ** " + tokenRC.get(contando).getRenglon() + " **, No. de token ** "
 					+ tokenRC.get(contando).getColumna() + " **";
 		else if (type == 2)
-			tipo = "\nError sint�ctico en asignaci�n, se esperaba un operador y operando antes de ** " + tok
+			tipo = "\nError sintactico en asignacion, se esperaba un operador y operando antes de ** " + tok
 					+ " ** en linea ** " + tokenRC.get(contando).getRenglon() + " **, No. de token ** "
 					+ tokenRC.get(contando).getColumna() + " **";
 		else if (type == 3)
-			tipo = "\nError sint�ctico en validaci�n, se esperaba un operador l�gico en lugar de ** " + tok
+			tipo = "\nError sintactico en validacion, se esperaba un operador logico en lugar de ** " + tok
 					+ " ** en linea ** " + tokenRC.get(contando).getRenglon() + " **, No. de token ** "
 					+ tokenRC.get(contando).getColumna() + " **";
 		else
-			tipo = "\nError sint�ctico en token ** " + tok + " ** se esperaba un token ** "
+			tipo = "\nError sintactico en token ** " + tok + " ** se esperaba un token ** "
 					+ tipo + " **";
 
 		Main.consola.append(tipo);
@@ -306,7 +306,7 @@ public class Sintactico<T> {
 																														// error
 						"==", "<=", ">=", "!", "!=", "true", "false", "(", ")", "/", "+", "-", "*", "if" };
 		if (type == 50)
-			return devuelve = "num�rico";
+			return devuelve = "numerico";
 		if (type == 52)
 			return devuelve = "identificador";
 		devuelve = cadenas[type];

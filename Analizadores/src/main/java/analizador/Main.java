@@ -31,8 +31,6 @@ public class Main extends JFrame implements ActionListener {
 	private JButton btnCompilar,btnVerTabla, btnAbrir, btnCerrar;
 	private ArrayList<ValoresTabla> tablaSimbolos;
 	
-	private boolean semanticStatus;
-	
 	public Main() {
 		hazInterfaz();
 	}
@@ -103,12 +101,8 @@ public class Main extends JFrame implements ActionListener {
 			if(this.consola.getText().trim().length() == 0) {
 				JOptionPane.showMessageDialog(this, "No se ha realizado la compilacion");
 				return;
-			}//this.semanticStatus
-			if(!this.semanticStatus) {
-				JOptionPane.showMessageDialog(this, "La tabla de simbolos no puede verse ya que la compilacion fue erronea");
-				return;
 			}
-			TablaSimbolosVista viewTabla = new TablaSimbolosVista(this.tablaSimbolos);
+			TablaSimbolosVista viewTabla = new TablaSimbolosVista((ArrayList<IPresentable>)(ArrayList<?>)this.tablaSimbolos,1);
 			viewTabla.setSize(700, 460); 
 			viewTabla.setLocationRelativeTo(null);
 			viewTabla.setVisible(true);
@@ -175,11 +169,17 @@ public class Main extends JFrame implements ActionListener {
 			tablaSimbolos = t.getValoresTabla();
 			Semantico semantic = new Semantico(tablaSimbolos,area.getText());
 			ArrayList<String> semanticErrors = semantic.checkSemantic();
-			this.semanticStatus = semantic.status;
 			consola.append("\n");
 			for (int i = 0; i < semanticErrors.size(); i++) {
 				consola.append(semanticErrors.get(i)+ "\n");
 			}
+			
+			CodigoIntermedio codigoI = new CodigoIntermedio(this.area.getText().trim(),tablaSimbolos);
+			ArrayList<Cuadruplo> cuadruplos = codigoI.getCuadruplos();
+			TablaSimbolosVista viewTabla = new TablaSimbolosVista((ArrayList<IPresentable>)(ArrayList<?>)cuadruplos,2);
+			viewTabla.setSize(700, 460); 
+			viewTabla.setLocationRelativeTo(null);
+			viewTabla.setVisible(true);
 		//}
 		
 

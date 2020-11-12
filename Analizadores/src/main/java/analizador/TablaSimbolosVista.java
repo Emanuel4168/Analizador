@@ -14,21 +14,25 @@ public class TablaSimbolosVista extends JFrame{
 	private JTable tablaSimbolos;
 	private Vector<String> headers = new Vector<String>(Arrays.asList("Nombre","Tipo","Valor","Linea","Columna"))  ;
 	private Vector<Vector<String>> data;
-	public TablaSimbolosVista(ArrayList<ValoresTabla> tablaSimbolosList) {
+	private int tipo;
+	
+	public TablaSimbolosVista(ArrayList<IPresentable> tablaSimbolosList, int tipo) {
+		headers = tipo == 1? new Vector<String>(Arrays.asList("Nombre","Tipo","Valor","Linea","Columna")):
+			new Vector<String>(Arrays.asList("Expresion","Operador","Operando 1","Operando 2","Resultado"));
 		data = new Vector<Vector<String>>();
+		this.tipo = tipo;
 		fillVector(tablaSimbolosList);
 		this.tablaSimbolos = new JTable(data,headers);
 		this.add(new JScrollPane(tablaSimbolos),BorderLayout.CENTER);
 	}
 	
-	private void fillVector(ArrayList<ValoresTabla> tablaSimbolosList) {
+	private void fillVector(ArrayList<IPresentable> tablaSimbolosList) {
 		Vector<String> row = new Vector<String>();
-		for(ValoresTabla symbol : tablaSimbolosList) {
-			row.add(0, symbol.nombre);
-			row.add(1, symbol.tipo);
-			row.add(2, symbol.valor);
-			row.add(3, symbol.renglon);
-			row.add(4, symbol.columna);
+		for(IPresentable symbol : tablaSimbolosList) {
+			String[] values = symbol.getValues();
+			for(int i = 0; i < values.length; i++) {
+				row.add(i, values[i]);
+			}
 			data.add(row);
 			row = new Vector<String>();
 		}
